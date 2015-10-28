@@ -5,18 +5,18 @@
 
 namespace gmb { namespace utils { namespace detail
 {
-  void * allocate_operation(size_t n, ...)
+  inline void * allocate_operation(size_t n, ...)
   {
     return ::operator new(n);
   }
 
-  void deallocate_operation(void *p, size_t n, ...)
+  inline void deallocate_operation(void *p, size_t n, ...)
   {
     ::operator delete(p, n);
   }
 
   template<typename T, typename ReturnType, typename ... Args>
-  variant_operation_base<ReturnType, Args...> * make_operation_wrapper(T &&callable)
+  inline variant_operation_base<ReturnType, Args...> * make_operation_wrapper(T &&callable)
   {
     void *p = allocate_operation(
       sizeof(variant_operation_wrapper<T, ReturnType, Args...>::this_t), &callable);
